@@ -14,7 +14,7 @@ export default function CartModal({
     useContext(CartContext);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+  console.log(cart.length)
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -103,20 +103,24 @@ export default function CartModal({
                       </div>
                     ))}
                 </div>
-                <div className="mt-6 flex justify-between items-center">
+                {cart.length != 0 &&   <div className="mt-6 flex justify-between items-center">
                   <span className="text-lg font-medium">Total:</span>
                   <span className="text-lg font-bold">₱{total.toFixed(2)}</span>
-                </div>
+                </div>}
+              
                 <div className="mt-6">
-                  <Link to='/place-order'>
-                    <button
-                      type="button"
-                      className="w-full inline-flex justify-center rounded-md border border-transparent bg-brown-600 px-4 py-2 text-sm font-medium text-white hover:bg-brown-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brown-500 focus-visible:ring-offset-2"
-                      onClick={onClose}
-                    >
-                      Proceed to Checkout
-                    </button>
-                  </Link>
+                  {cart.length != 0   ? 
+                          <Link to='/place-order'>
+                          <button
+                            type="button"
+                            className="w-full inline-flex justify-center rounded-md border border-transparent bg-brown-600 px-4 py-2 text-sm font-medium text-white hover:bg-brown-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brown-500 focus-visible:ring-offset-2"
+                            onClick={onClose}
+                          >
+                            Proceed to Checkout
+                          </button>
+                          </Link>
+                  : <>Your Cart is Empty</>}
+                 
                 </div>
               </Dialog.Panel>
             </Transition.Child>

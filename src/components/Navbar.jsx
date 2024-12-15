@@ -70,9 +70,6 @@ export default function Navbar() {
               <Link to="/menu" className="text-brown-600 hover:text-brown-800">
                 Menu
               </Link>
-              <Link to="/about" className="text-brown-600 hover:text-brown-800">
-                About
-              </Link>
             </>
           ) : (
             <Link to="/menu" className="text-brown-600 hover:text-brown-800">

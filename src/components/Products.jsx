@@ -26,7 +26,7 @@ export default function Products() {
                   className="mx-auto lg:w-[600px] lg:h-[600px] object-cover"
                 />
                 <div className="mt-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex gap-4 items-center justify-between">
                     <h3 className="text-3xl font-bold text-brown-800">
                       Matcha Flavor
                     </h3>

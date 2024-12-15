@@ -9,7 +9,10 @@ import RegisterPage from "./pages/Register";
 import { AppContext } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import CheckoutPage from "./pages/PlaceOrder";
-
+import Redirect from "./Routes/Redirect";
+import Protected from "./Routes/Protected";
+import ProfilePage from "./pages/Profile-page";
+import Orders from "./pages/Orders";
 function App() {
   return (
     <AppContext>
@@ -19,12 +22,14 @@ function App() {
             <Navbar />
             <main className="flex-1">
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Redirect />} />
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/place-order" element={<CheckoutPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/orders" element={<Orders />} />
               </Routes>
             </main>
             <Footer />

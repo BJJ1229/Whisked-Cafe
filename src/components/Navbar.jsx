@@ -1,49 +1,49 @@
-import { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Menu, Transition } from '@headlessui/react'
-import { ShoppingBag, User, ChevronDown } from 'lucide-react'
-import { useContext } from 'react'
-import { AuthContext } from '../context/AuthContext' 
-import CartModal from './Cart-Modal'
-import { CartContext } from '../context/CartContext'
+import { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
+import { Menu, Transition } from "@headlessui/react";
+import { ShoppingBag, User, ChevronDown } from "lucide-react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import CartModal from "./Cart-Modal";
+import { CartContext } from "../context/CartContext";
 
 // Mock cart data (replace with actual cart state management)
 const initialCartItems = [
   {
-    id: '1',
-    name: 'Iced Coffee',
-    size: '16oz',
-    addOns: ['Espresso Shot'],
-    sugarLevel: '50%',
+    id: "1",
+    name: "Iced Coffee",
+    size: "16oz",
+    addOns: ["Espresso Shot"],
+    sugarLevel: "50%",
     quantity: 1,
     price: 60,
   },
   {
-    id: '2',
-    name: 'Americano',
-    size: '12oz',
+    id: "2",
+    name: "Americano",
+    size: "12oz",
     addOns: [],
-    sugarLevel: 'No Sugar',
+    sugarLevel: "No Sugar",
     quantity: 2,
     price: 50,
   },
-]
+];
 
 export default function Navbar() {
-  const { customer } = useContext(AuthContext)
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  
-  const {cart} = useContext(CartContext)
-  
-  const [cartItems, setCartItems] = useState(initialCartItems)
-  
+  const { customer } = useContext(AuthContext);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const { cart } = useContext(CartContext);
+
+  const [cartItems, setCartItems] = useState(initialCartItems);
+
   // const handleRemoveItem = (id) => {
   //   setCartItems(cartItems.filter(item => item.id !== id))
   // }
 
   // const handleUpdateQuantity = (id, newQuantity) => {
   //   if (newQuantity > 0) {
-  //     setCartItems(cartItems.map(item => 
+  //     setCartItems(cartItems.map(item =>
   //       item.id === id ? { ...item, quantity: newQuantity } : item
   //     ))
   //   }
@@ -62,15 +62,24 @@ export default function Navbar() {
           </div>
         </Link>
         <div className="hidden md:flex items-center gap-6">
-          <Link to="/" className="text-brown-600 hover:text-brown-800">
-            Home
-          </Link>
-          <Link to="/menu" className="text-brown-600 hover:text-brown-800">
-            Menu
-          </Link>
-          <Link to="/about" className="text-brown-600 hover:text-brown-800">
-            About
-          </Link>
+          {!customer ? (
+            <>
+              <Link to="/" className="text-brown-600 hover:text-brown-800">
+                Home
+              </Link>
+              <Link to="/menu" className="text-brown-600 hover:text-brown-800">
+                Menu
+              </Link>
+              <Link to="/about" className="text-brown-600 hover:text-brown-800">
+                About
+              </Link>
+            </>
+          ) : (
+            <Link to="/menu" className="text-brown-600 hover:text-brown-800">
+              Menu
+            </Link>
+          )}
+
           {customer ? (
             <div className="flex items-center gap-4">
               <button
@@ -103,12 +112,28 @@ export default function Navbar() {
                 >
                   <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="px-1 py-1">
+                    <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            to="/orders"
+                            className={`${
+                              active
+                                ? "bg-brown-600 text-white"
+                                : "text-gray-900"
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          >
+                            My Orders
+                          </Link>
+                        )}
+                      </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <Link
                             to="/profile"
                             className={`${
-                              active ? "bg-brown-600 text-white" : "text-gray-900"
+                              active
+                                ? "bg-brown-600 text-white"
+                                : "text-gray-900"
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                           >
                             Profile
@@ -120,7 +145,9 @@ export default function Navbar() {
                           <Link
                             to="/logout"
                             className={`${
-                              active ? "bg-brown-600 text-white" : "text-gray-900"
+                              active
+                                ? "bg-brown-600 text-white"
+                                : "text-gray-900"
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                           >
                             Logout
@@ -149,5 +176,5 @@ export default function Navbar() {
         // onUpdateQuantity={handleUpdateQuantity}
       />
     </nav>
-  )
+  );
 }

@@ -3,6 +3,8 @@ import { Dialog, Transition, RadioGroup } from "@headlessui/react";
 import { X } from "lucide-react";
 import useCart from "./Cart";
 import { CartContext } from "../../context/CartContext";
+import { Description, Field, Label, Textarea } from "@headlessui/react";
+import clsx from "clsx";
 
 const sizes = [
   { name: "12oz", price: 50 },
@@ -28,19 +30,26 @@ export default function CustomizeModal({ isOpen, onClose, item }) {
   const [selectedSize, setSelectedSize] = useState("12oz");
   const [addOns, setAddOns] = useState([]);
   const [sugarLevel, setSugarLevel] = useState("Default (100%)");
+  const [note, setNote] = useState("");
   const handleAddOnToggle = (addon) => {
     setAddOns((prev) =>
       prev.includes(addon) ? prev.filter((a) => a !== addon) : [...prev, addon]
     );
   };
-  
-  const {AddtoCart} = useContext(CartContext)
+
+  const { AddtoCart } = useContext(CartContext);
 
   const handleSubmit = () => {
-    const updated_item = { ...item, sugar: sugarLevel, addOns: addOns, quantity: 1 };
-    AddtoCart(updated_item)
-  
-    onClose()
+    const updated_item = {
+      ...item,
+      sugar: sugarLevel,
+      addOns: addOns,
+      quantity: 1,
+      note: note,
+    };
+    AddtoCart(updated_item);
+
+    onClose();
   };
 
   return (
@@ -175,6 +184,19 @@ export default function CustomizeModal({ isOpen, onClose, item }) {
                       ))}
                     </select>
                   </div>
+                  {/* Note */}
+                  <Field>
+                    <Label className="text-sm/6 font-medium text-gray-900">
+                      Note
+                    </Label>
+                    <Textarea
+                      className={clsx(
+                        "block w-full resize-none rounded-lg border bg-white/5 py-1.5 px-3 text-sm/6 text-gray-800",
+                        "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                      )}
+                      rows={3}
+                    />
+                  </Field>
 
                   <button
                     onClick={handleSubmit}
